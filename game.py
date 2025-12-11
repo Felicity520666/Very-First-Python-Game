@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+pygame.font.init()
 
 WIDTH, HEIGHT = 1000, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -13,8 +14,12 @@ PLAYER_HEIGHT = 60
 
 PLAYER_VEL = 5
 
-def draw(player):
+FONT = pygame.font.SysFont("Garamond", 30)
+
+def draw(player, elapsed_time):
     WIN.blit(BG, (0,0))
+
+    time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "black")
 
     pygame.draw.rect(WIN, "pink", player)
    
@@ -26,9 +31,12 @@ def main ():
     player = pygame.Rect(200, HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
     
     clock = pygame.time.Clock()
+    start_time = time.time()
+    elapsed_time = 0
 
     while run:
         clock.tick(60)
+        elapsed_time = time.time() - start_time
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
